@@ -14,7 +14,7 @@ public:
 	}
 };
 
-Engine::Application* Engine::createApplication()
+Engine::Application* Engine::create_application()
 {
 	return new GameApp();
 }

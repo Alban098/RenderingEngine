@@ -2,8 +2,8 @@
 
 #include "Core.h"
 
-namespace Engine {
-	
+namespace Engine
+{
 	class ENGINE_API Application
 	{
 	public:
@@ -11,12 +11,10 @@ namespace Engine {
 		virtual ~Application();
 
 		void run();
-		
 	};
 
-
 	//Client defined
-	Application* createApplication();
+	Application* create_application();
 
 }
 

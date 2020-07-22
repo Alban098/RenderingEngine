@@ -2,7 +2,6 @@
 
 namespace Engine
 {
-
 	Application::Application()
 	{
 		

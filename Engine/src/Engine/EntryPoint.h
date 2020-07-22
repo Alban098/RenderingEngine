@@ -1,13 +1,15 @@
 #pragma once
-#include "Application.h"
 
 #ifdef PLATFORM_WINDOWS
 
-extern Engine::Application* Engine::createApplication();
+extern Engine::Application* Engine::create_application();
 
 int main(int argc, char** argv)
 {
-	auto* app = Engine::createApplication();
+	Engine::Log::init();
+	ENGINE_INFO("Initialized App");
+	
+	auto* app = Engine::create_application();
 	app->run();
 	delete app;
 }
