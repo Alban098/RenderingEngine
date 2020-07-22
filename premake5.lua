@@ -18,6 +18,9 @@ project "Engine"
 	targetdir ("out/" .. outputDir .. "/%{prj.name}")
 	objdir ("out_tmp/" .. outputDir .. "/%{prj.name}")
 
+	pchheader "pch.h"
+	pchsource "Engine/src/pch.cpp"
+
 	files 
 	{
 		"%{prj.name}/src/**.h",
@@ -26,7 +29,8 @@ project "Engine"
 
 	includedirs
 	{
-		"%{prj.name}/vendor/spdlog/include"
+		"%{prj.name}/vendor/spdlog/include",
+		"%{prj.name}/src"
 	}
 
 	filter "system:windows"
