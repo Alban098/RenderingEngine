@@ -8,15 +8,20 @@ workspace "Engine"
 		"Distribution"
 	}
 
-outputDir = "%{cfg.buildcfg}_%{cfg.system}_%{cfg.architecture}"
+outputdir = "%{cfg.buildcfg}_%{cfg.system}_%{cfg.architecture}"
+
+includeDir = {}
+includeDir["GLFW"] = "Engine/vendor/GLFW/include"
+
+include "Engine/vendor/GLFW"
 
 project "Engine"
 	location "Engine"
 	kind "SharedLib"
 	language "C++"
 
-	targetdir ("out/" .. outputDir .. "/%{prj.name}")
-	objdir ("out_tmp/" .. outputDir .. "/%{prj.name}")
+	targetdir ("out/" .. outputdir .. "/%{prj.name}")
+	objdir ("out_tmp/" .. outputdir .. "/%{prj.name}")
 
 	pchheader "pch.h"
 	pchsource "Engine/src/pch.cpp"
@@ -30,7 +35,14 @@ project "Engine"
 	includedirs
 	{
 		"%{prj.name}/vendor/spdlog/include",
-		"%{prj.name}/src"
+		"%{prj.name}/src",
+		"%{includeDir.GLFW}"
+	}
+
+	links
+	{
+		"GLFW",
+		"opengl32.lib"
 	}
 
 	filter "system:windows"
@@ -46,11 +58,15 @@ project "Engine"
 
 		postbuildcommands
 		{
-			"{COPY} %{cfg.buildtarget.relpath} ../out/" .. outputDir .. "/GameDemo/"
+			"{COPY} %{cfg.buildtarget.relpath} ../out/" .. outputdir .. "/GameDemo/"
 		}
 
 	filter "configurations:Debug"
-		defines "ENGINE_DEBUG"
+		defines 
+		{
+			"ENGINE_DEBUG",
+			"ENABLE_ASSERT"
+		}
 		symbols "On"
 
 	filter "configurations:Release"
@@ -66,8 +82,8 @@ project "GameDemo"
 	kind "ConsoleApp"
 	language "C++"
 
-	targetdir ("out/" .. outputDir .. "/%{prj.name}")
-	objdir ("out_tmp/" .. outputDir .. "/%{prj.name}")
+	targetdir ("out/" .. outputdir .. "/%{prj.name}")
+	objdir ("out_tmp/" .. outputdir .. "/%{prj.name}")
 
 	files 
 	{

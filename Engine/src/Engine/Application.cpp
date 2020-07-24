@@ -8,6 +8,7 @@ namespace Engine
 {
 	Application::Application()
 	{	
+		m_window = std::unique_ptr<Window>(Window::create());
 	}
 
 	Application::~Application()
@@ -16,9 +17,9 @@ namespace Engine
 
 	void Application::run()
 	{
-		WindowResizeEvent e(1280, 720);
-		ENGINE_TRACE(e);
-
-		while (true);
+		while (m_running)
+		{
+			m_window->onUpdate();
+		}
 	}
 }
