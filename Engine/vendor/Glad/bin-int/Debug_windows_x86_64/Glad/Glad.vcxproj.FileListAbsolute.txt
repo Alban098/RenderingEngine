@@ -1,0 +1,2 @@
+A:\C++\Engine\Engine\vendor\Glad\bin\Debug_windows_x86_64\Glad\Glad.pdb
+A:\C++\Engine\Engine\vendor\Glad\bin-int\Debug_windows_x86_64\Glad\Glad.pdb

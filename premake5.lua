@@ -12,8 +12,10 @@ outputdir = "%{cfg.buildcfg}_%{cfg.system}_%{cfg.architecture}"
 
 includeDir = {}
 includeDir["GLFW"] = "Engine/vendor/GLFW/include"
+includeDir["Glad"] = "Engine/vendor/Glad/include"
 
 include "Engine/vendor/GLFW"
+include "Engine/vendor/Glad"
 
 project "Engine"
 	location "Engine"
@@ -36,12 +38,14 @@ project "Engine"
 	{
 		"%{prj.name}/vendor/spdlog/include",
 		"%{prj.name}/src",
-		"%{includeDir.GLFW}"
+		"%{includeDir.GLFW}",
+		"%{includeDir.Glad}"
 	}
 
 	links
 	{
 		"GLFW",
+		"Glad",
 		"opengl32.lib"
 	}
 
@@ -53,7 +57,8 @@ project "Engine"
 		defines
 		{
 			"PLATFORM_WINDOWS",
-			"BUILD_DLL"
+			"BUILD_DLL",
+			"GLFW_INCLUDE_NONE"
 		}
 
 		postbuildcommands
@@ -67,14 +72,17 @@ project "Engine"
 			"ENGINE_DEBUG",
 			"ENABLE_ASSERT"
 		}
+		buildoptions "/MDd"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "ENGINE_RELEASE"
+		buildoptions "/MD"
 		optimize "On"
 
 	filter "configurations:Distribution"
 		defines "ENGINE_DIST"
+		buildoptions "/MD"
 		optimize "On"
 
 project "GameDemo"
@@ -114,12 +122,15 @@ project "GameDemo"
 
 	filter "configurations:Debug"
 		defines "ENGINE_DEBUG"
+		buildoptions "/MDd"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "ENGINE_RELEASE"
+		buildoptions "/MD"
 		optimize "On"
 
 	filter "configurations:Distribution"
 		defines "ENGINE_DIST"
+		buildoptions "/MD"
 		optimize "On"

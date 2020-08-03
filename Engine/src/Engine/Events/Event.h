@@ -36,6 +36,8 @@ namespace Engine
 		friend class EventDispatcher;
 
 	public:
+		bool handled = false;
+
 		virtual EventType getEventType() const = 0;
 		virtual const char* getName() const = 0;
 		virtual int getCategoryFlags() const = 0;
@@ -45,9 +47,6 @@ namespace Engine
 		{
 			return getCategoryFlags() & category;
 		}
-
-	protected:
-		bool m_handled = false;
 	};
 
 	class EventDispatcher
@@ -63,7 +62,7 @@ namespace Engine
 		bool dispatch(EventFct<T> t_func) {
 			if (m_event.getEventType() == T::getStaticType())
 			{
-				m_event.m_handled = t_func(*(T*)&m_event);
+				m_event.handled = t_func(*(T*)&m_event);
 				return true;
 			}
 			return false;
