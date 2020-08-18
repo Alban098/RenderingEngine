@@ -4,15 +4,18 @@
 #include "Log.h"
 #include "Events/ApplicationEvent.h"
 
+#include <glad/glad.h>
+
 namespace Engine
 {
-
-#define BIND_EVENT_FCT(x) std::bind(&x, this, std::placeholders::_1)
+	Application* Application::s_instance = nullptr;
 
 	Application::Application()
 	{	
+		ENGINE_CORE_ASSERT(!s_instance, "Application already exists");
 		m_window = std::unique_ptr<Window>(Window::create());
 		m_window->setEventCallback(BIND_EVENT_FCT(Application::onEvent));
+		s_instance = this;
 	}
 
 	Application::~Application()
@@ -23,6 +26,9 @@ namespace Engine
 	{
 		while (m_running)
 		{
+			glClearColor(1, 0, 1, 1);
+			glClear(GL_COLOR_BUFFER_BIT);
+
 			for (Layer* layer : m_layerStack)
 				layer->onUpdate();
 
@@ -33,11 +39,13 @@ namespace Engine
 	void Application::pushLayer(Layer* t_layer)
 	{
 		m_layerStack.pushLayer(t_layer);
+		t_layer->onAttach();
 	}
 
 	void Application::pushOverlay(Layer* t_overlay)
 	{
 		m_layerStack.pushOverlay(t_overlay);
+		t_overlay->onAttach();
 	}
 
 	//========================== Events ==========================

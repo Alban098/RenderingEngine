@@ -15,3 +15,5 @@
 	#define ENGINE_ASSERT(x, ...)
 	#define ENGINE_CORE_ASSERT(x, ...)
 #endif
+
+#define BIND_EVENT_FCT(fct) std::bind(&fct, this, std::placeholders::_1)

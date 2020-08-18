@@ -54,7 +54,7 @@ namespace Engine
 	{
 	public:
 		
-		inline float getButton() const { return m_button; }
+		inline int getButton() const { return m_button; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
 

@@ -25,6 +25,7 @@ public:
 	GameApp()
 	{
 		pushLayer(new GameLayer());
+		pushOverlay(new Engine::ImGuiLayer());
 	}
 
 	~GameApp()

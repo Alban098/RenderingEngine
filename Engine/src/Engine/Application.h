@@ -23,11 +23,16 @@ namespace Engine
 		void pushOverlay(Layer* t_overlay);
 
 		void onEvent(Event& t_event);
+	
+		static inline Application& get() { return *s_instance; }
+		inline Window& getWindow() { return *m_window; }
 	private:
 		bool onWindowClose(WindowCloseEvent& t_event);
 		std::unique_ptr<Window> m_window;
 		bool m_running = true;
 		LayerStack m_layerStack;
+
+		static Application* s_instance;
 	};
 
 	//Client defined
